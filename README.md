@@ -1,8 +1,9 @@
 ### Hello There!
 
 Welcome to my ByteStore!
+
 This project is a Fullstack E-Commerce website that demonstrates use of:
-# Ruby on Rails 7, Hotwire, Tailwind, Stripe, PostgreSQL and Gems like Devise and AASM.
+# Ruby on Rails 7, Active Storage, Hotwire, Tailwind, Stripe, PostgreSQL and Gems like Devise and AASM.
 
 ## Setup steps:
 While setting up the application, run the following commands:
