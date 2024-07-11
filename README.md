@@ -1,24 +1,13 @@
-# README
+### Hello There!
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Welcome to my ByteStore!
 
-Things you may want to cover:
+This project is a Fullstack E-Commerce website that demonstrates use of:
+# Ruby on Rails 7, Active Storage, Hotwire, Tailwind, Stripe, PostgreSQL and Gems like Devise and AASM.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+## Setup steps:
+While setting up the application, run the following commands:
+1. `bundle install`
+2. `rails db:create`
+3. `rails db:seed`
+4. `bin/dev`      (This calls the Procfile.dev which loads the server and the css classes)
