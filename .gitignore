@@ -12,6 +12,7 @@ capybara-*.html
 /public/system
 /coverage/
 /spec/tmp
+dump.rdb
 
 # Ignore all environment files (except templates).
 /.env*
