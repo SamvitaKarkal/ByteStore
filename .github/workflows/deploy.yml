@@ -3,15 +3,36 @@ name: Deploy to Render
 on:
   push:
     branches:
-      - master  # Trigger deployment on push to the master branch
+      - 9_add_gems_and_automate_deployment  # Trigger deployment on push to the master branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:13
+        env:
+          POSTGRES_DB: myapp_test
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --entrypoint redis-server
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 3.2.2
 
     - name: Install dependencies
       run: |
@@ -23,6 +44,9 @@ jobs:
         bundle exec rake db:create db:migrate db:seed
         bundle exec rspec
 
+    - name: Run Bundle Audit
+      run: bundle exec bundle audit
+
     - name: Deploy to Render
       env:
         RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
@@ -33,5 +57,10 @@ jobs:
           -H "Content-Type: application/json" \
           -d '{"serviceId": "srv-cqb8lcaj1k6c73anvpd0", "branch": "master"}' \
           https://api.render.com/v1/services/srv-cqb8lcaj1k6c73anvpd0/deploys
+
+    - name: Checkout clean repository
+      uses: actions/checkout@v2
+      with:
+        clean: true
 
 # service id can be obtained from your render dashboard url
