@@ -1,0 +1,39 @@
+name: Deploy to Render
+
+on:
+  push:
+    branches:
+      - master  # Trigger deployment on push to the master branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libpq-dev
+        gem install bundler
+        bundle install
+
+    - name: Run tests
+      run: |
+        bundle exec rake db:create db:migrate db:seed
+        bundle exec rspec
+
+    - name: Deploy to Render
+      env:
+        RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+      run: |
+        curl -X POST \
+          -H "Authorization: Bearer $RENDER_API_KEY" \
+          -H "Accept: application/json" \
+          -H "Content-Type: application/json" \
+          -d '{"serviceId": "srv-cqb8lcaj1k6c73anvpd0", "branch": "master"}' \
+          https://api.render.com/v1/services/srv-cqb8lcaj1k6c73anvpd0/deploys
+
+# service id can be obtained from your render dashboard url
