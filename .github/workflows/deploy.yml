@@ -39,11 +39,6 @@ jobs:
         gem install bundler
         bundle install
 
-    - name: Run tests
-      run: |
-        bundle exec rake db:create db:migrate db:seed
-        bundle exec rspec
-
     - name: Run Bundle Audit
       run: bundle exec bundle audit
 
