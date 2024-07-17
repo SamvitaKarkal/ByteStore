@@ -2,9 +2,11 @@ default: &default
   adapter: postgresql
   encoding: unicode
   host: 127.0.0.1
-  username: root
-  password: p@ssw0rd
-  pool: 5
+  username: <%= ENV['POSTGRES_USER'] || 'root' %>
+  password: <%= ENV['POSTGRES_PASSWORD'] || 'p@ssw0rd' %>
+  host: <%= ENV['DB_HOST'] || '127.0.0.1' %>
+  port: <%= ENV['DB_PORT'] || 5432 %>
+  pool: <%= ENV['DB_POOL'] || 5 %>
 
 development:
   <<: *default
@@ -17,5 +19,3 @@ test:
 production:
   <<: *default
   database: byte_store_production
-  username: riko_cusko
-  password: <%= ENV["BYTE_STORE_DATABASE_PASSWORD"] %>
