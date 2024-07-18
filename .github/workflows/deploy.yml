@@ -40,28 +40,6 @@ jobs:
         gem install bundler
         bundle install
 
-    - name: Print environment variables
-      run: |
-        echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}"
-        echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}"
-        echo "DB_HOST=${{ secrets.DB_HOST }}"
-
-    - name: Test PostgreSQL connection
-      env:
-        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-        DB_HOST: ${{ secrets.DB_HOST }}
-      run: |
-        PGPASSWORD=$POSTGRES_PASSWORD psql -h $DB_HOST -U $POSTGRES_USER -c '\l'
-
-    - name: Database setup
-      env:
-        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-        POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-        DB_HOST: ${{ secrets.DB_HOST }}
-      run: |
-        bundle exec rake db:create db:migrate db:seed
-
     - name: Run Bundle Audit
       run: |
         gem install bundler-audit
