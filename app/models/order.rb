@@ -1,6 +1,7 @@
 class Order < ApplicationRecord
   has_many :order_products
-  
+  has_many :products, through: :order_products
+
   VALID_EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/i
   validates :customer_email, format: {with: VALID_EMAIL_REGEX}, allow_nil: true
 
