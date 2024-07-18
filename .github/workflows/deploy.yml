@@ -41,14 +41,18 @@ jobs:
         bundle install
 
     - name: Print environment variables
+      run: |
+        echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}"
+        echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}"
+        echo "DB_HOST=${{ secrets.DB_HOST }}"
+
+    - name: Test PostgreSQL connection
       env:
         POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
         POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
         DB_HOST: ${{ secrets.DB_HOST }}
       run: |
-        echo "POSTGRES_USER=$POSTGRES_USER"
-        echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD"
-        echo "DB_HOST=$DB_HOST"
+        PGPASSWORD=$POSTGRES_PASSWORD psql -h $DB_HOST -U $POSTGRES_USER -c '\l'
 
     - name: Database setup
       env:
