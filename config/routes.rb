@@ -1,15 +1,12 @@
 Rails.application.routes.draw do
   devise_for :admins
-
-  get "up" => "rails/health#show", as: :rails_health_check
-
-  root "home#index"
-  
-  authenticated :admin_user do
+  authenticated :admin do
     root to: "admin#index", as: :admin_root
   end
 
+  root "home#index"
   get "admin" => "admin#index"
+  get "up" => "rails/health#show", as: :rails_health_check
   
   namespace :admin do
     resources :orders
