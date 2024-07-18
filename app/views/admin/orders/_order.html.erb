@@ -30,9 +30,9 @@
   <% if order.order_products.any? %>
     <p class="my-5">
       <strong class="block font-medium mb-1">Products:</strong>
-      <% order.order_products.each do |order_product| %>
+      <% order.order_products.each_with_index do |order_product, index| %>
         <span class="mb-2 ml-2">
-          <%= order_product.id %>.  
+          <%= index + 1 %>.  
           <%= order_product.product.name %>
            of size <%= order_product.size %>
            and quantity <%= order_product.quantity %>
