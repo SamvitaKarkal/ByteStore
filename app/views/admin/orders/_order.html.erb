@@ -1,22 +1,44 @@
 <div id="<%= dom_id order %>">
   <p class="my-5">
     <strong class="block font-medium mb-1">Customer email:</strong>
-    <%= order.customer_email %>
+    <span class="ml-2">
+      <%= order.customer_email %>
+    <span>
   </p>
 
   <p class="my-5">
     <strong class="block font-medium mb-1">Status:</strong>
-    <%= order.status %>
+    <span class="ml-2">
+      <%= order.status %>
+    <span>
   </p>
 
   <p class="my-5">
     <strong class="block font-medium mb-1">Total:</strong>
-    <%= order.total %>
+    <span class="ml-2">
+      <%= order.total %>
+    <span>
   </p>
 
   <p class="my-5">
     <strong class="block font-medium mb-1">Address:</strong>
-    <%= order.address %>
+    <span class="ml-2">
+      <%= order.address %>
+    </span>
   </p>
+
+  <% if order.order_products.any? %>
+    <p class="my-5">
+      <strong class="block font-medium mb-1">Products:</strong>
+      <% order.order_products.each do |order_product| %>
+        <span class="mb-2 ml-2">
+          <%= order_product.id %>.  
+          <%= order_product.product.name %>
+           of size <%= order_product.size %>
+           and quantity <%= order_product.quantity %>
+        </p>
+      <% end %>
+    </p>
+  <% end %>
 
 </div>

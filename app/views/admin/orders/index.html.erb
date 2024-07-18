@@ -14,9 +14,11 @@
     <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
       <div class="py-2 inline-block min-w-full">
         <div class="overflow-x-auto">
+          <h2 class="inline-block text-xl font-bold text-gray-500 py-2"> Incomplete Orders:</h2>
           <table class="min-w-full overflow-x-scroll">
             <thead class="bg-white border-b">
               <tr>
+                <th scope="col" class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Order ID</th>
                 <th scope="col" class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Customer email</th>
                 <th scope="col" class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Status</th>
                 <th scope="col" class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Total</th>
@@ -24,8 +26,50 @@
               </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
-              <% @admin_orders.each do |admin_order| %>
+              <% @incomplete_orders.each do |admin_order| %>
                 <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 cursor-pointer">
+                    <%= link_to admin_order.id, [:admin, admin_order], class: 'underline' %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 cursor-pointer" onclick="window.location='<%= admin_order_path(admin_order) %>'">
+                    <%= admin_order.customer_email %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 cursor-pointer" onclick="window.location='<%= admin_order_path(admin_order) %>'">
+                    <%= admin_order.status %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 cursor-pointer" onclick="window.location='<%= admin_order_path(admin_order) %>'">
+                    <%= admin_order.total %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 cursor-pointer" onclick="window.location='<%= admin_order_path(admin_order) %>'">
+                    <%= admin_order.address %>
+                  </td>
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800">
+                    <%= link_to icon('fas', 'pen-to-square'), edit_admin_order_path(admin_order), class: "rounded-lg py-3 px-3 bg-blue-600 text-white inline-block font-medium" %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="overflow-x-auto">
+          <h2 class="inline-block text-xl font-bold text-gray-500 py-2 mt-4"> Completed Orders:</h2>
+          <table class="min-w-full overflow-x-scroll">
+            <thead class="bg-white border-b">
+              <tr>
+                <th scope="col" class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Order ID</th>
+                <th scope="col" class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Customer email</th>
+                <th scope="col" class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Status</th>
+                <th scope="col" class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Total</th>
+                <th scope="col" class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Address</th>
+              </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+              <% @completed_orders.each do |admin_order| %>
+                <tr class="bg-gray-50 border-b hover:bg-gray-100">
+                  <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 cursor-pointer">
+                    <%= link_to admin_order.id, [:admin, admin_order], class: 'underline' %>
+                  </td>
                   <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 cursor-pointer" onclick="window.location='<%= admin_order_path(admin_order) %>'">
                     <%= admin_order.customer_email %>
                   </td>
