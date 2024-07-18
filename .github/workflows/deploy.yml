@@ -40,7 +40,9 @@ jobs:
         bundle install
 
     - name: Run Bundle Audit
-      run: bundle exec bundle audit
+      run: |
+        gem install bundler-audit
+        bundle audit check --update
 
     - name: Deploy to Render
       env:
